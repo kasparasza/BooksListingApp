@@ -1,0 +1,24 @@
+<resources>
+    <string name="app_name">BooksListingApp</string>
+
+    <!-- strings used in activity_book_search_layout -->
+    <string name="title_search_hint_text">book title for search</string>
+    <string name="author_search_hint_text">author\'s name for search</string>
+    <string name="spinner_side_text">limit results to</string>
+    <string name="search_button_text">Search</string>
+    <string name="search_expand_view">touch to expand</string>
+    <string name="no_results_message">No books were found.\n\nYou could try and modify the search.</string>
+    <string name="no_internet_connection_message">There is no network connection.\nPlease, come back later.</string>
+
+    <!-- strings used in Spinner to set max number of search results -->
+    <string name="results_05">5</string>
+    <string name="results_10">10</string>
+    <string name="results_15">15</string>
+    <string name="results_20">20</string>
+    <string name="results_30">30</string>
+    <string name="results_40">40</string>
+
+    <!-- strings used in Toast messages -->
+    <string name="toast_no_search_parameters_entered">Please enter search parameters at first</string>
+
+</resources>

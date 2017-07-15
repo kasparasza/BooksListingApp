@@ -1,0 +1,113 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    tools:context="com.example.kasparasza.bookslistingapp.BookSearchActivity">
+
+    <LinearLayout
+        android:id="@+id/search_query_view"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="@color/color_background_1"
+        android:orientation="vertical"
+        android:padding="@dimen/padding_1">
+
+        <LinearLayout
+            android:id="@+id/search_query_part_that_can_be_hidden"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical">
+
+            <EditText
+                android:id="@+id/search_query_title"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:hint="@string/title_search_hint_text"
+                android:minWidth="@dimen/min_width" />
+
+            <EditText
+                android:id="@+id/search_query_author"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:hint="@string/author_search_hint_text"
+                android:minWidth="@dimen/min_width" />
+
+        </LinearLayout>
+
+        <RelativeLayout
+            android:id="@+id/search_query_part_always_on_top"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal">
+
+            <TextView
+                android:id="@+id/spinner_side_text"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/spinner_side_text" />
+
+            <Spinner
+                android:id="@+id/search_results_number"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_below="@id/spinner_side_text" />
+
+            <Button
+                android:id="@+id/search_button"
+                android:layout_width="wrap_content"
+                android:layout_height="@dimen/button_height"
+                android:layout_alignParentRight="true"
+                android:background="@color/color_of_button"
+                android:text="@string/search_button_text" />
+
+            <TextView
+                android:id="@+id/expand_search_view"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_centerHorizontal="true"
+                android:paddingTop="@dimen/padding_3"
+                tools:text="@string/search_expand_view" />
+
+        </RelativeLayout>
+
+    </LinearLayout>
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:background="@color/color_background_2">
+
+        <ListView
+            android:id="@+id/search_results"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content" />
+
+        <!-- Empty view is only visible when the list has no items. -->
+        <TextView
+            android:id="@+id/empty_state_text"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:gravity="center"
+            tools:text="@string/no_results_message" />
+
+        <!-- Image src is set in java; it is visible only if ListView is empty. -->
+        <ImageView
+            android:id="@+id/no_connection_image"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:scaleType="center" />
+
+        <!-- ProgressBar that shall be visible before query returns any result. -->
+        <ProgressBar
+            android:id="@+id/progress_bar"
+            style="@style/Widget.AppCompat.ProgressBar"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerInParent="true" />
+
+    </RelativeLayout>
+
+</LinearLayout>

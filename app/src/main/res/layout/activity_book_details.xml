@@ -1,0 +1,59 @@
+<?xml version="1.0" encoding="utf-8"?>
+<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    android:padding="@dimen/padding_1"
+    android:background="@color/color_background_1"
+    tools:context="com.example.kasparasza.bookslistingapp.BookDetailsActivity">
+
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical">
+
+        <TextView
+            android:id="@+id/book_title"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:gravity="center"
+            android:textColor="@color/color_text_black"
+            android:textSize="@dimen/card_text_size"
+            tools:text="An interesting book" />
+
+        <TextView
+            android:id="@+id/book_authors"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:gravity="center"
+            android:paddingBottom="@dimen/padding_2"
+            android:paddingTop="@dimen/padding_2"
+            android:textColor="@color/color_text_black"
+            android:textSize="@dimen/card_text_size"
+            tools:text="A famous author" />
+
+        <!-- width & height of the ImageView are set in BookListAdapter.java,
+     the parameters in .xml are overridden -->
+        <ImageView
+            android:id="@+id/book_image_thumbnail"
+            android:layout_width="@dimen/width_of_book_image"
+            android:layout_height="@dimen/height_of_book_image"
+            android:layout_gravity="center"
+            tools:src="@drawable/image_placeholder" />
+
+        <!-- maybe it will need to be scrollable  -->
+        <TextView
+            android:id="@+id/book_description"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:paddingTop="@dimen/padding_3"
+            tools:text="This is a description of this book. This is a description of this book. This is a description of this book." />
+
+    </LinearLayout>
+
+</ScrollView>

@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <color name="colorPrimary">#00796B</color>
+    <color name="colorPrimaryDark">#004D40</color>
+    <color name="colorAccent">#03A9F4</color>
+
+    <!-- Colors of Backgrounds for Layouts:-->
+    <color name="color_background_1">#E0F2F1</color>
+    <color name="color_background_2">#FFFFFF</color>
+
+    <!-- Colors of TextViews:-->
+    <color name="color_text_black">#000000</color>
+
+    <!-- Colors of Buttons:-->
+    <color name="color_of_button">#4DB6AC</color>
+
+
+</resources>
