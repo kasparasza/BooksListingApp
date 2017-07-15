@@ -10,10 +10,6 @@ public class BookDetailsActivity extends AppCompatActivity {
 
     // declaration of String constants to be used
     private static final String LOG_TAG = AppUtilities.class.getSimpleName();
-    private static final String BOOK_TITLE = "BOOK_TITLE";
-    private static final String BOOK_AUTHOR = "BOOK_AUTHOR";
-    private static final String BOOK_DESCRIPTION = "BOOK_DESCRIPTION";
-    private static final String BOOK_IMAGE_LINK = "BOOK_IMAGE_LINK";
 
     // initialise the views that will be populated with data
     private TextView bookTitle;
@@ -34,10 +30,12 @@ public class BookDetailsActivity extends AppCompatActivity {
 
         // populate the views with data
         // data is extracted from an Intent
-        bookTitle.setText(getIntent().getStringExtra(BOOK_TITLE));
-        bookAuthors.setText(getIntent().getStringExtra(BOOK_AUTHOR));
-        bookDescription.setText(getIntent().getStringExtra(BOOK_DESCRIPTION));
-        String imageLink = getIntent().getStringExtra(BOOK_IMAGE_LINK);
+        Book book = (getIntent().getParcelableExtra(Book.BOOK));
+        bookTitle.setText(book.getTitle());
+        bookAuthors.setText(book.getAuthors());
+        bookDescription.setText(book.getDescription());
+        String imageLink = book.getImageSmallThumbLink();
+
         // use of Picasso library to set ImageView
         // at first we check, whether the String with image link is not empty
         if (!imageLink.matches("")){

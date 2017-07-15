@@ -45,10 +45,6 @@ public class BookSearchActivity extends AppCompatActivity implements LoaderManag
     private static final String LIST_VIEW_TOP = "LIST_VIEW_TOP";
     private static final String BOOK_PARCELABLE_LIST = "BOOK_PARCELABLE_LIST";
     private static final String SEARCH_VIEW_VISIBILITY = "SEARCH_VIEW_VISIBILITY";
-    private static final String BOOK_TITLE = "BOOK_TITLE";
-    private static final String BOOK_AUTHOR = "BOOK_AUTHOR";
-    private static final String BOOK_DESCRIPTION = "BOOK_DESCRIPTION";
-    private static final String BOOK_IMAGE_LINK = "BOOK_IMAGE_LINK";
     // base parts of the Google Books API query
     private static final String URL_BASE = "https://www.googleapis.com/books/v1/volumes?q=";
     private static final String QUERY_PARAM_IN_TITLE = "intitle:";
@@ -157,11 +153,7 @@ public class BookSearchActivity extends AppCompatActivity implements LoaderManag
                 // create an Intent
                 Intent openBookDetailsActivity = new Intent(getApplicationContext(), BookDetailsActivity.class);
                 // put extra information into the Intent
-                openBookDetailsActivity.putExtra(BOOK_TITLE, selectedBook.getTitle());
-                openBookDetailsActivity.putExtra(BOOK_AUTHOR, selectedBook.getAuthors());
-                openBookDetailsActivity.putExtra(BOOK_DESCRIPTION, selectedBook.getDescription());
-                openBookDetailsActivity.putExtra(BOOK_IMAGE_LINK, selectedBook.getImageSmallThumbLink());
-
+                openBookDetailsActivity.putExtra(Book.BOOK, selectedBook);
                 // start Activity
                 startActivity(openBookDetailsActivity);
             }
@@ -247,20 +239,27 @@ public class BookSearchActivity extends AppCompatActivity implements LoaderManag
     // #2) onLoadFinished - populate UI with the data obtained from http query
     @Override
     public void onLoadFinished(Loader<List<Book>> loader, List<Book> data) {
-
-        // create an instance of an adapter which will populate the layout with data on Book objects
-        BookListAdapter adapterForSearchResults = new BookListAdapter(this, 0, data);
-
-        // connect the adapter with the root List layout & with the ArrayList data
-        bookSearchResultsListView.setAdapter(adapterForSearchResults);
-        booksArrayList = (ArrayList<Book>) data;
-
         // when the query is finalized - the progress bar is hidden
         progressBar.setVisibility(View.GONE);
 
-        // if the query results in zero Books to display, an appropriate message is displayed
-        bookSearchResultsListView.setEmptyView(noResultsView);
-        noResultsView.setText(R.string.no_results_message);
+        // there may be cases where the input List is empty (e.g. there was an error in parsing JSONObject)
+        // therefore, at first we check if the input List has any data
+        if (data.size() > 0){
+            // create an instance of an adapter which will populate the layout with data on Book objects
+            BookListAdapter adapterForSearchResults = new BookListAdapter(this, 0, data);
+
+            // connect the adapter with the root List layout & with the ArrayList data
+            bookSearchResultsListView.setAdapter(adapterForSearchResults);
+            booksArrayList = (ArrayList<Book>) data;
+
+            // if the query results in zero Books to display, an appropriate message is displayed
+            bookSearchResultsListView.setEmptyView(noResultsView);
+            noResultsView.setText(R.string.no_results_message);
+        } else {
+            // if input List is empty, we have zero Books to display; an appropriate message is displayed
+            bookSearchResultsListView.setEmptyView(noResultsView);
+            noResultsView.setText(R.string.no_results_message);
+        }
     }
 
     // #3) onLoaderReset - clear data on reset

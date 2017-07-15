@@ -14,6 +14,9 @@ public class Book implements Parcelable{
     private String description;
     private String imageSmallThumbLink;
 
+    // declaration of String constants used by the class
+    protected static final String BOOK = "BOOK";
+
     // constructors of the class
     public Book(String mTitle, String mAuthors, String mDescription, String mImageSmallThumbLink){
         title = mTitle;

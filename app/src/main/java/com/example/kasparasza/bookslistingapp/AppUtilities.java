@@ -162,80 +162,84 @@ public class AppUtilities {
             JSONObject jsonObject = new JSONObject(JSONString);
 
             // extract "items" JSONArray
-            JSONArray arrayItems = jsonObject.getJSONArray("items");
+            // check whether "items" JSONArray is available at all
+            // if true - the parsing continues, else - we return an empty ArrayList, as there actually is no data to display
+            if(jsonObject.has("items")){
+                JSONArray arrayItems = jsonObject.getJSONArray("items");
 
-            // Loop through each item in the array
-            // Get Book JSONObject at position i
-            int item;
-            for (item = 0; item < arrayItems.length(); item++) {
-                JSONObject bookInfo = arrayItems.getJSONObject(item);
+                // Loop through each item in the array
+                // Get Book JSONObject at position i
+                int item;
+                for (item = 0; item < arrayItems.length(); item++) {
+                    JSONObject bookInfo = arrayItems.getJSONObject(item);
 
-                // get "volumeInfo" JSONObject
-                JSONObject volumeInfoObject = bookInfo.getJSONObject("volumeInfo");
+                    // get "volumeInfo" JSONObject
+                    JSONObject volumeInfoObject = bookInfo.getJSONObject("volumeInfo");
 
-                // extract "title" for title of a book
-                String title = "";
-                try {
-                    title = volumeInfoObject.getString("title");
-                } catch (org.json.JSONException exc_07) {
-                    title = NO_TITLE;
-                }
-
-                // extract "authors" for authors of a book
-                String authors = "";
-                // step_1 authors are stored in JSONArray
-                try {
-                    JSONArray arrayAuthors = volumeInfoObject.getJSONArray("authors");
-                    // step_2 read contents of the JSONArray and create a String
-                    int i;
-                    StringBuilder stringBuilder = new StringBuilder();
-                    for (i = 0; i < arrayAuthors.length(); i++) {
-                        stringBuilder.append(arrayAuthors.getString(i)).append(", "); // Use ", " as the delimiter
-                    }
-                    authors = stringBuilder.toString();
-                    authors = authors.substring(0, authors.length() - 2); // Delete ", " from the end of the String
-                } catch (org.json.JSONException exc_07) {
-                    authors = NO_AUTHOR;
-                }
-
-                // extract "description" for description of a book
-                String description = "";
-                try {
-                    description = volumeInfoObject.getString("description");
-                } catch (org.json.JSONException exc_07) {
-                    description = NO_DESCRIPTION;
-                }
-
-                // get "imageLinks" JSONObject & extract an image link address for a book
-                JSONObject imageLinksObject;
-                String imageLink;
-                // check whether "imageLinks" JSONObject is available
-                if (volumeInfoObject.has("imageLinks")) {
-                    // get "imageLinks" JSONObject
-                    imageLinksObject = volumeInfoObject.getJSONObject("imageLinks");
-                    // extract "thumbnail" for image link address of a book
+                    // extract "title" for title of a book
+                    String title = "";
                     try {
-                        imageLink = imageLinksObject.getString("thumbnail");
+                        title = volumeInfoObject.getString("title");
                     } catch (org.json.JSONException exc_07) {
-                        // if "thumbnail" String is not available, try to extract "smallThumbnail" String
-                        try {
-                            imageLink = imageLinksObject.getString("smallThumbnail");
-                        } catch (org.json.JSONException exc_08) {
-                            // if no String with http is available, we set the String to be empty
-                            // there will have to be an additional check to be performed in Adapter class
-                            // when we try to load the image with Picasso
-                            imageLink = "";
-                        }
+                        title = NO_TITLE;
                     }
-                } else {
-                    imageLink = "";
+
+                    // extract "authors" for authors of a book
+                    String authors = "";
+                    // step_1 authors are stored in JSONArray
+                    try {
+                        JSONArray arrayAuthors = volumeInfoObject.getJSONArray("authors");
+                        // step_2 read contents of the JSONArray and create a String
+                        int i;
+                        StringBuilder stringBuilder = new StringBuilder();
+                        for (i = 0; i < arrayAuthors.length(); i++) {
+                            stringBuilder.append(arrayAuthors.getString(i)).append(", "); // Use ", " as the delimiter
+                        }
+                        authors = stringBuilder.toString();
+                        authors = authors.substring(0, authors.length() - 2); // Delete ", " from the end of the String
+                    } catch (org.json.JSONException exc_07) {
+                        authors = NO_AUTHOR;
+                    }
+
+                    // extract "description" for description of a book
+                    String description = "";
+                    try {
+                        description = volumeInfoObject.getString("description");
+                    } catch (org.json.JSONException exc_07) {
+                        description = NO_DESCRIPTION;
+                    }
+
+                    // get "imageLinks" JSONObject & extract an image link address for a book
+                    JSONObject imageLinksObject;
+                    String imageLink;
+                    // check whether "imageLinks" JSONObject is available
+                    if (volumeInfoObject.has("imageLinks")) {
+                        // get "imageLinks" JSONObject
+                        imageLinksObject = volumeInfoObject.getJSONObject("imageLinks");
+                        // extract "thumbnail" for image link address of a book
+                        try {
+                            imageLink = imageLinksObject.getString("thumbnail");
+                        } catch (org.json.JSONException exc_07) {
+                            // if "thumbnail" String is not available, try to extract "smallThumbnail" String
+                            try {
+                                imageLink = imageLinksObject.getString("smallThumbnail");
+                            } catch (org.json.JSONException exc_08) {
+                                // if no String with http is available, we set the String to be empty
+                                // there will have to be an additional check to be performed in Adapter class
+                                // when we try to load the image with Picasso
+                                imageLink = "";
+                            }
+                        }
+                    } else {
+                        imageLink = "";
+                    }
+
+                    // create Book object from the extracted data
+                    Book book = new Book(title, authors, description, imageLink);
+
+                    // add the object to List
+                    bookDataList.add(book);
                 }
-
-                // create Book object from the extracted data
-                Book book = new Book(title, authors, description, imageLink);
-
-                // add the object to List
-                bookDataList.add(book);
             }
         } catch (JSONException exc_04) {
             Log.e(LOG_TAG, "An exception was encountered while trying to read JSONString " + exc_04);
